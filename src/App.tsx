@@ -1,122 +1,126 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { lazy, Suspense, useState } from 'react'
+import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { Shell } from '@/components/layout/Shell'
+import { CommandPalette } from '@/components/CommandPalette'
+import { ToastProvider } from '@/components/ui/ToastProvider'
+import { ThemeInitializer } from '@/components/ThemeInitializer'
+import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut'
+import { usePlaygroundStore } from '@/store/usePlaygroundStore'
+import { PANEL_ROUTES } from '@/lib/panelRoutes'
 
-function App() {
-  const [count, setCount] = useState(0)
+const SpringPanel = lazy(() => import('@/panels/spring/SpringPanel'))
+const EasingPanel = lazy(() => import('@/panels/easing/EasingPanel'))
+const TokenPanel = lazy(() => import('@/panels/tokens/TokenPanel'))
+const StatesPanel = lazy(() => import('@/panels/states/StatesPanel'))
+const GesturesPanel = lazy(() => import('@/panels/gestures/GesturesPanel'))
+const A11yPanel = lazy(() => import('@/panels/accessibility/A11yPanel'))
+const PerfPanel = lazy(() => import('@/panels/performance/PerfPanel'))
 
+function PanelFallback() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+    <div className="flex flex-1 items-center justify-center text-sm text-gray-500">
+      Loading panel…
+    </div>
   )
 }
 
-export default App
+function GlobalShortcuts() {
+  const navigate = useNavigate()
+  const toggleSidebar = usePlaygroundStore((s) => s.toggleSidebar)
+  const setCodePanelOpen = usePlaygroundStore((s) => s.setCodePanelOpen)
+  const codePanelOpen = usePlaygroundStore((s) => s.codePanelOpen)
+  const [paletteOpen, setPaletteOpen] = useState(false)
+
+  const panelShortcuts = PANEL_ROUTES.map((p, i) => ({
+    key: String(i + 1),
+    meta: true,
+    handler: () => navigate(p.path),
+  }))
+
+  useKeyboardShortcut([
+    ...panelShortcuts,
+    { key: 'b', meta: true, handler: () => toggleSidebar() },
+    { key: 'k', meta: true, handler: () => setPaletteOpen(true) },
+    { key: '/', meta: true, handler: () => setCodePanelOpen(!codePanelOpen) },
+  ])
+
+  return <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
+}
+
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<Navigate to="/spring" replace />} />
+      <Route
+        path="/spring"
+        element={
+          <Suspense fallback={<PanelFallback />}>
+            <SpringPanel />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/easing"
+        element={
+          <Suspense fallback={<PanelFallback />}>
+            <EasingPanel />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/tokens"
+        element={
+          <Suspense fallback={<PanelFallback />}>
+            <TokenPanel />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/states"
+        element={
+          <Suspense fallback={<PanelFallback />}>
+            <StatesPanel />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/gestures"
+        element={
+          <Suspense fallback={<PanelFallback />}>
+            <GesturesPanel />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/a11y"
+        element={
+          <Suspense fallback={<PanelFallback />}>
+            <A11yPanel />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/performance"
+        element={
+          <Suspense fallback={<PanelFallback />}>
+            <PerfPanel />
+          </Suspense>
+        }
+      />
+      <Route path="*" element={<Navigate to="/spring" replace />} />
+    </Routes>
+  )
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <ThemeInitializer />
+      <Shell>
+        <GlobalShortcuts />
+        <AppRoutes />
+      </Shell>
+      <ToastProvider />
+    </BrowserRouter>
+  )
+}
