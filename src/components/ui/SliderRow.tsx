@@ -19,12 +19,15 @@ export function SliderRow({
   onChange,
 }: SliderRowProps) {
   return (
-    <div className="space-y-1">
-      <div className="flex items-center justify-between text-sm">
-        <label htmlFor={`slider-${label}`} className="font-medium text-gray-700 dark:text-gray-300">
+    <div className="space-y-2">
+      <div className="flex items-center justify-between">
+        <label
+          htmlFor={`slider-${label}`}
+          className="text-xs font-medium uppercase tracking-wide text-muted"
+        >
           {label}
         </label>
-        <span className="font-mono text-xs text-gray-500">
+        <span className="font-mono text-xs tabular-nums text-primary">
           {value}
           {unit}
         </span>
@@ -41,7 +44,7 @@ export function SliderRow({
         aria-valuemin={min}
         aria-valuemax={max}
         aria-valuenow={value}
-        className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-border dark:bg-border-dark accent-primary"
+        className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 accent-primary dark:bg-gray-700"
       />
     </div>
   )

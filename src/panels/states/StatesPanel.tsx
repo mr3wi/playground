@@ -12,7 +12,7 @@ export default function StatesPanel() {
   const locked = COMPONENT_STATES.find((s) => s.name === lockedState)
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex min-h-0 flex-1 flex-col">
       <TopBar
         extra={
           <select

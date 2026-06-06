@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-route
 import { Shell } from '@/components/layout/Shell'
 import { CommandPalette } from '@/components/CommandPalette'
 import { ToastProvider } from '@/components/ui/ToastProvider'
+import { TooltipProvider } from '@/components/ui/Tooltip'
 import { ThemeInitializer } from '@/components/ThemeInitializer'
 import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut'
 import { usePlaygroundStore } from '@/store/usePlaygroundStore'
@@ -114,13 +115,17 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <ThemeInitializer />
-      <Shell>
-        <GlobalShortcuts />
-        <AppRoutes />
-      </Shell>
-      <ToastProvider />
+    <BrowserRouter
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
+      <TooltipProvider>
+        <ThemeInitializer />
+        <Shell>
+          <GlobalShortcuts />
+          <AppRoutes />
+        </Shell>
+        <ToastProvider />
+      </TooltipProvider>
     </BrowserRouter>
   )
 }

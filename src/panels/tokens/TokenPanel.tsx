@@ -93,10 +93,13 @@ export default function TokenPanel() {
 }`
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex min-h-0 flex-1 flex-col">
       <TopBar onReset={tokens.resetTokens} />
-      <div className="grid flex-1 grid-cols-1 gap-4 overflow-y-auto p-4 lg:grid-cols-2">
-        <div className="space-y-4">
+      <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-y-auto p-4 lg:grid-cols-2">
+        <div className="min-h-[260px] lg:col-start-2 lg:row-start-1 lg:min-h-0">
+          <LiveComponent {...tokens} />
+        </div>
+        <div className="space-y-4 lg:col-start-1 lg:row-start-1">
           <ColorInput label="--color-primary" value={tokens.colorPrimary} onChange={(v) => tokens.setTokens({ colorPrimary: v })} />
           <ColorInput label="--color-accent" value={tokens.colorAccent} onChange={(v) => tokens.setTokens({ colorAccent: v })} />
           <ColorInput label="--color-surface" value={tokens.colorSurface} onChange={(v) => tokens.setTokens({ colorSurface: v })} />
@@ -104,9 +107,9 @@ export default function TokenPanel() {
           <SliderRow label="--spacing-base" value={tokens.spacingBase} min={4} max={32} unit="px" onChange={(v) => tokens.setTokens({ spacingBase: v })} />
           <SliderRow label="--font-size-base" value={tokens.fontSizeBase} min={12} max={20} unit="px" onChange={(v) => tokens.setTokens({ fontSizeBase: v })} />
           <Tabs.Root defaultValue="css">
-            <Tabs.List className="flex gap-2">
+            <Tabs.List className="flex gap-1 rounded-lg border border-border bg-panel p-1 dark:border-border-dark dark:bg-surface-dark">
               {(['css', 'json', 'tailwind'] as const).map((t) => (
-                <Tabs.Trigger key={t} value={t} className="text-xs uppercase data-[state=active]:text-primary">
+                <Tabs.Trigger key={t} value={t} className="tab-trigger">
                   {t}
                 </Tabs.Trigger>
               ))}
@@ -125,7 +128,6 @@ export default function TokenPanel() {
             </Tabs.Content>
           </Tabs.Root>
         </div>
-        <LiveComponent {...tokens} />
       </div>
     </div>
   )

@@ -32,10 +32,11 @@ export default function EasingPanel() {
   const demos = ['button', 'pill', 'card', 'icon', 'text'] as const
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex min-h-0 flex-1 flex-col">
       <TopBar onCopySnippet={() => copy(css)} onReset={resetEasing} />
-      <div className="flex flex-1 flex-col gap-6 overflow-y-auto p-4 lg:flex-row">
-        <div className="space-y-4">
+      <div className="flex flex-1 flex-col gap-6 overflow-y-auto p-4 md:p-5 lg:flex-row">
+        <div className="panel-card space-y-4 lg:w-80">
+          <p className="section-label">Bezier curve</p>
           <BezierCanvas p1x={p1x} p1y={p1y} p2x={p2x} p2y={p2y} onChange={(a, b, c, d) => setEasing({ p1x: a, p1y: b, p2x: c, p2y: d })} />
           <div className="flex flex-wrap gap-2">
             {EASING_PRESETS.map((preset) => (
@@ -50,7 +51,7 @@ export default function EasingPanel() {
             ))}
           </div>
         </div>
-        <div className="flex-1 space-y-4">
+        <div className="panel-card flex-1 space-y-4">
           <div className="flex flex-wrap items-end gap-3">
             {demos.map((d) => (
               <motion.div
@@ -82,13 +83,9 @@ export default function EasingPanel() {
             Preview
           </button>
           <Tabs.Root defaultValue="css">
-            <Tabs.List className="flex gap-2 border-b border-border dark:border-border-dark">
+            <Tabs.List className="flex gap-1 rounded-lg border border-border bg-panel p-1 dark:border-border-dark dark:bg-surface-dark">
               {(['css', 'motion', 'gsap'] as const).map((tab) => (
-                <Tabs.Trigger
-                  key={tab}
-                  value={tab}
-                  className="px-3 py-1.5 text-sm uppercase data-[state=active]:border-b-2 data-[state=active]:border-primary"
-                >
+                <Tabs.Trigger key={tab} value={tab} className="tab-trigger">
                   {tab}
                 </Tabs.Trigger>
               ))}

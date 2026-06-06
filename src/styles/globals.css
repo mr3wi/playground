@@ -17,17 +17,78 @@
   }
 
   body {
-    @apply bg-surface text-gray-900 dark:bg-surface-dark dark:text-gray-100;
+    @apply overflow-hidden bg-surface text-gray-900 dark:bg-surface-dark dark:text-gray-100;
     font-family: 'Inter Variable', system-ui, sans-serif;
   }
 
   *:focus-visible {
     @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-surface dark:ring-offset-surface-dark;
   }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(124 58 237 / 0.45) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background-color: rgb(124 58 237 / 0.35);
+  }
+
+  .dark *::-webkit-scrollbar-thumb {
+    background-color: rgb(124 58 237 / 0.55);
+  }
 }
 
 @layer utilities {
-  .scrollbar-thin {
-    scrollbar-width: thin;
+  .text-muted {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+}
+
+@layer components {
+  .tab-trigger {
+    @apply rounded-md px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-gray-500 transition-colors;
+    @apply dark:text-gray-400;
+    @apply data-[state=active]:bg-primary/10 data-[state=active]:text-primary;
+  }
+
+  .section-label {
+    @apply text-[11px] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400;
+  }
+
+  .panel-card {
+    @apply rounded-xl border border-border bg-panel p-4 dark:border-border-dark dark:bg-panel-dark dark:ring-1 dark:ring-white/5;
+  }
+
+  .panel-stage {
+    @apply rounded-xl border border-dashed border-primary/25 bg-stage dark:border-primary/30 dark:bg-stage-dark;
+    background-image: radial-gradient(circle, rgb(124 58 237 / 0.07) 1px, transparent 1px);
+    background-size: 12px 12px;
+  }
+
+  .panel-accent-rail {
+    @apply relative;
+  }
+
+  .panel-accent-rail::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 3rem;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, rgb(124 58 237), transparent);
+    pointer-events: none;
+    z-index: 1;
   }
 }

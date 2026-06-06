@@ -49,7 +49,7 @@ useSpring({ config: { tension: ${stiffness}, friction: ${damping}, mass: ${mass}
 transition: transform ${stats.cssDuration}ms cubic-bezier(${stats.cssBezier});`
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex min-h-0 flex-1 flex-col">
       <TopBar
         onCopySnippet={() => copy(code)}
         onReset={() => {
@@ -57,32 +57,35 @@ transition: transform ${stats.cssDuration}ms cubic-bezier(${stats.cssBezier});`
           setTrigger(0)
         }}
       />
-      <div className="flex flex-1 flex-col gap-6 overflow-y-auto p-4 lg:flex-row">
-        <div className="w-full space-y-4 lg:w-64">
+      <div className="flex flex-1 flex-col gap-6 overflow-y-auto p-4 md:p-5 lg:flex-row">
+        <div className="panel-card w-full space-y-3 lg:w-72">
+          <p className="section-label">Spring physics</p>
           <SliderRow label="Stiffness" value={stiffness} min={10} max={800} onChange={(v) => setSpring({ stiffness: v })} />
           <SliderRow label="Damping" value={damping} min={1} max={100} onChange={(v) => setSpring({ damping: v })} />
           <SliderRow label="Mass" value={mass} min={0.1} max={10} step={0.1} onChange={(v) => setSpring({ mass: v })} />
-          <div className="flex justify-center pt-4">
+          <p className="section-label pt-1">Preview</p>
+          <div className="panel-stage relative flex h-24 items-center overflow-hidden">
             <motion.div
               key={trigger}
               style={{ x }}
-              className="h-[60px] w-[60px] rounded-full bg-primary"
+              className="h-[60px] w-[60px] shrink-0 rounded-full bg-primary shadow-lg shadow-primary/25"
             />
           </div>
           <button
             type="button"
             onClick={runAnimation}
-            className="w-full rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark"
+            className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white hover:bg-primary-dark"
           >
             Trigger animation
           </button>
         </div>
-        <div className="flex-1 space-y-4">
+        <div className="panel-card flex-1 space-y-4">
+          <p className="section-label">Displacement curve</p>
           <SpringCurveCanvas stiffness={stiffness} damping={damping} mass={mass} />
           <div className="flex flex-wrap gap-2">
             <Badge>{stats.duration}ms</Badge>
             <Badge variant="muted">Bounce: {stats.bounce}</Badge>
-            <Badge variant="success">Feel: {stats.feel}</Badge>
+            <Badge variant="muted">Feel: {stats.feel}</Badge>
           </div>
           <CodeBlock code={code} language="typescript" />
         </div>

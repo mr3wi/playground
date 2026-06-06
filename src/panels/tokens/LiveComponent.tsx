@@ -37,11 +37,10 @@ export function LiveComponent({
       }}
     >
       <div
-        className="w-full max-w-sm shadow-lg"
+        className="w-full max-w-sm bg-white shadow-lg dark:bg-gray-900 dark:shadow-black/40"
         style={{
           borderRadius: 'var(--radius-base)',
           padding: 'calc(var(--spacing-base) * 1.5)',
-          backgroundColor: '#fff',
           fontSize: 'var(--font-size-base)',
         }}
       >
@@ -54,10 +53,10 @@ export function LiveComponent({
             <p className="font-semibold" style={{ color: 'var(--color-primary)' }}>
               Alex Rivera
             </p>
-            <p className="text-gray-500">Design Engineer</p>
+            <p className="text-gray-500 dark:text-gray-400">Design Engineer</p>
           </div>
         </div>
-        <p className="text-gray-600" style={{ marginBottom: 'var(--spacing-base)' }}>
+        <p className="text-gray-600 dark:text-gray-300" style={{ marginBottom: 'var(--spacing-base)' }}>
           Building interaction systems and design tooling.
         </p>
         <div className="flex gap-2">

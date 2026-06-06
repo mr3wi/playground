@@ -39,7 +39,7 @@ export default function GesturesPanel() {
   }
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex min-h-0 flex-1 flex-col">
       <TopBar onReset={resetGestures} />
       <div className="flex flex-wrap gap-4 border-b border-border px-4 py-2 text-sm dark:border-border-dark">
         <span>Velocity: <strong>{velocity}</strong> px/s</span>

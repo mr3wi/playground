@@ -16,15 +16,15 @@ export function TopBar({ onCopySnippet, onReset, extra }: TopBarProps) {
   const panel = PANEL_ROUTES.find((p) => location.pathname.startsWith(p.path))
 
   return (
-    <header className="flex h-12 shrink-0 items-center justify-between border-b border-border bg-surface px-4 dark:border-border-dark dark:bg-surface-dark">
-      <h1 className="text-sm font-semibold">{panel?.label ?? 'Playground'}</h1>
-      <div className="flex items-center gap-2">
+    <header className="flex h-12 shrink-0 items-center justify-between border-b border-border bg-panel px-4 dark:border-border-dark dark:bg-panel-dark">
+      <h1 className="text-sm font-semibold tracking-tight">{panel?.label ?? 'Playground'}</h1>
+      <div className="flex items-center gap-1 rounded-lg border border-border p-0.5 dark:border-border-dark">
         {extra}
         {onCopySnippet && (
           <button
             type="button"
             onClick={onCopySnippet}
-            className="rounded p-2 text-gray-500 hover:bg-panel hover:text-gray-900 dark:hover:bg-panel-dark dark:hover:text-gray-100"
+            className="rounded-md p-2 text-muted hover:bg-primary/10 hover:text-primary"
             aria-label="Copy panel output"
             title="Copy snippet (⌘⇧C)"
           >
@@ -35,7 +35,7 @@ export function TopBar({ onCopySnippet, onReset, extra }: TopBarProps) {
           <button
             type="button"
             onClick={onReset}
-            className="rounded p-2 text-gray-500 hover:bg-panel hover:text-gray-900 dark:hover:bg-panel-dark dark:hover:text-gray-100"
+            className="rounded-md p-2 text-muted hover:bg-surface hover:text-gray-900 dark:hover:bg-surface-dark dark:hover:text-gray-100"
             aria-label="Reset panel to defaults"
             title="Reset (R)"
           >
@@ -45,7 +45,7 @@ export function TopBar({ onCopySnippet, onReset, extra }: TopBarProps) {
         <button
           type="button"
           onClick={toggleTheme}
-          className="rounded p-2 text-gray-500 hover:bg-panel hover:text-gray-900 dark:hover:bg-panel-dark dark:hover:text-gray-100"
+          className="rounded-md p-2 text-muted hover:bg-surface hover:text-gray-900 dark:hover:bg-surface-dark dark:hover:text-gray-100"
           aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
         >
           {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}

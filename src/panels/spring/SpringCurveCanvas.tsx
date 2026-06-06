@@ -41,15 +41,22 @@ export function SpringCurveCanvas({ stiffness, damping, mass }: SpringCurveCanva
         points.push([t, y])
       }
 
-      const x = d3.scaleLinear().domain([0, 3]).range([40, width - 10])
-      const y = d3.scaleLinear().domain([0, 1.4]).range([height - 20, 10])
+      const marginLeft = 8
+      const marginRight = 12
+      const marginTop = 16
+      const marginBottom = 18
+      const x = d3.scaleLinear().domain([0, 3]).range([marginLeft + 32, width - marginRight])
+      const y = d3.scaleLinear().domain([0, 1.4]).range([height - marginBottom, marginTop])
 
-      ctx.fillStyle = document.documentElement.classList.contains('dark')
-        ? '#1A1A1A'
-        : '#F8F8F8'
+      const isDark = document.documentElement.classList.contains('dark')
+      const bg = isDark ? '#1A1A1A' : '#F8F8F8'
+      const grid = isDark ? '#374151' : '#E5E7EB'
+      const label = isDark ? '#D1D5DB' : '#4B5563'
+
+      ctx.fillStyle = bg
       ctx.fillRect(0, 0, width, height)
 
-      ctx.strokeStyle = '#9CA3AF'
+      ctx.strokeStyle = grid
       ctx.setLineDash([4, 4])
       ctx.beginPath()
       ctx.moveTo(40, y(1))
@@ -68,14 +75,10 @@ export function SpringCurveCanvas({ stiffness, damping, mass }: SpringCurveCanva
       })
       ctx.stroke()
 
-      ctx.fillStyle = '#6B7280'
-      ctx.font = '10px sans-serif'
-      ctx.fillText('time →', width - 50, height - 4)
-      ctx.save()
-      ctx.translate(8, height / 2)
-      ctx.rotate(-Math.PI / 2)
-      ctx.fillText('displacement', 0, 0)
-      ctx.restore()
+      ctx.fillStyle = label
+      ctx.font = '11px system-ui, sans-serif'
+      ctx.fillText('displacement', marginLeft + 4, marginTop - 2)
+      ctx.fillText('time →', width - marginRight - 44, height - 6)
     })
 
     return () => {
@@ -88,7 +91,7 @@ export function SpringCurveCanvas({ stiffness, damping, mass }: SpringCurveCanva
       ref={ref}
       role="img"
       aria-label="Spring displacement over time curve"
-      className="w-full max-w-[400px] rounded-lg border border-border dark:border-border-dark"
+      className="w-full max-w-[400px] rounded-lg border border-border dark:border-border-dark dark:ring-1 dark:ring-white/5"
       style={{ aspectRatio: '400 / 120' }}
     />
   )

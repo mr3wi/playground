@@ -35,22 +35,20 @@ export function CodeBlock({ code, language, label }: CodeBlockProps) {
   const langLabel = label ?? language.toUpperCase()
 
   return (
-    <div className="relative overflow-hidden rounded-lg border border-border bg-code text-gray-100 dark:border-border-dark dark:bg-code">
-      <div className="flex items-center justify-between border-b border-white/10 px-3 py-1.5">
-        <Badge variant="muted" className="!bg-white/10 !text-gray-300">
-          {langLabel}
-        </Badge>
+    <div className="relative overflow-hidden rounded-lg border border-border bg-code-light dark:border-border-dark dark:bg-code">
+      <div className="flex items-center justify-between border-b border-border px-3 py-1.5 dark:border-white/10">
+        <Badge variant="muted">{langLabel}</Badge>
         <button
           type="button"
           onClick={() => copy(code)}
-          className="rounded p-1 text-gray-400 hover:bg-white/10 hover:text-white"
+          className="rounded p-1 text-gray-500 hover:bg-black/5 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-white"
           aria-label="Copy code"
         >
           {copied ? <Check className="h-4 w-4 text-accent" /> : <Copy className="h-4 w-4" />}
         </button>
       </div>
       <div
-        className="overflow-x-auto p-3 text-sm [&_pre]:!bg-transparent [&_pre]:!m-0 [&_code]:font-mono"
+        className="overflow-x-auto p-3 text-sm [&_code]:font-mono [&_pre]:!m-0 [&_pre]:!bg-transparent [&_pre]:whitespace-pre-wrap [&_pre]:break-words"
         dangerouslySetInnerHTML={{ __html: html || `<pre><code>${code}</code></pre>` }}
       />
     </div>

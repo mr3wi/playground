@@ -14,11 +14,11 @@ const variants = {
   muted: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400',
 }
 
-/** Small label chip for shortcuts, stats, and WCAG badges. */
+/** Metric (default), status (success/error/warning), or meta (muted) chip. */
 export function Badge({ children, variant = 'default', className = '' }: BadgeProps) {
   return (
     <span
-      className={`inline-flex items-center rounded-sm px-1.5 py-0.5 text-xs font-medium font-mono ${variants[variant]} ${className}`}
+      className={`inline-flex items-center rounded-md px-1.5 py-0.5 text-xs font-medium font-mono ${variants[variant]} ${className}`}
     >
       {children}
     </span>

@@ -68,8 +68,8 @@ export function BezierCanvas({ p1x, p1y, p2x, p2y, onChange }: BezierCanvasProps
       {overshoot && (
         <rect x={PAD} y={PAD} width={SIZE - PAD * 2} height={SIZE - PAD * 2} fill="none" stroke="#F59E0B" strokeDasharray="4 2" opacity={0.5} />
       )}
-      <line x1={p0.sx} y1={p0.sy} x2={c1.sx} y2={c1.sy} stroke="#14B8A6" strokeWidth={1} opacity={0.6} />
-      <line x1={p3.sx} y1={p3.sy} x2={c2.sx} y2={c2.sy} stroke="#A855F7" strokeWidth={1} opacity={0.6} />
+      <line x1={p0.sx} y1={p0.sy} x2={c1.sx} y2={c1.sy} stroke="#7C3AED" strokeWidth={1} opacity={0.45} />
+      <line x1={p3.sx} y1={p3.sy} x2={c2.sx} y2={c2.sy} stroke="#7C3AED" strokeWidth={1} opacity={0.45} />
       <path
         d={`M ${p0.sx} ${p0.sy} C ${c1.sx} ${c1.sy}, ${c2.sx} ${c2.sy}, ${p3.sx} ${p3.sy}`}
         fill="none"
@@ -80,7 +80,7 @@ export function BezierCanvas({ p1x, p1y, p2x, p2y, onChange }: BezierCanvasProps
         cx={c1.sx}
         cy={c1.sy}
         r={8}
-        fill="#14B8A6"
+        fill="#7C3AED"
         className="cursor-grab"
         onPointerDown={() => setDragging(1)}
       />
@@ -88,7 +88,7 @@ export function BezierCanvas({ p1x, p1y, p2x, p2y, onChange }: BezierCanvasProps
         cx={c2.sx}
         cy={c2.sy}
         r={8}
-        fill="#A855F7"
+        fill="#6D28D9"
         className="cursor-grab"
         onPointerDown={() => setDragging(2)}
       />
