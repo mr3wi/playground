@@ -15,6 +15,7 @@ const StatesPanel = lazy(() => import('@/panels/states/StatesPanel'))
 const GesturesPanel = lazy(() => import('@/panels/gestures/GesturesPanel'))
 const A11yPanel = lazy(() => import('@/panels/accessibility/A11yPanel'))
 const PerfPanel = lazy(() => import('@/panels/performance/PerfPanel'))
+const TaskCards3D = lazy(() => import('@/experiments/3d-task-cards'))
 
 function PanelFallback() {
   return (
@@ -104,6 +105,14 @@ function AppRoutes() {
         element={
           <Suspense fallback={<PanelFallback />}>
             <PerfPanel />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/3d-task-cards"
+        element={
+          <Suspense fallback={<PanelFallback />}>
+            <TaskCards3D />
           </Suspense>
         }
       />
